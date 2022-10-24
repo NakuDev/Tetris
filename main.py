@@ -16,7 +16,7 @@ class Game:
         self.clock = pygame.time.Clock()
 
         self.menu = Menu()
-        self.menu.music_name = "Tetris Ragtime Piano"
+        self.menu.music_name = "Classic Tetris Music"
 
         #créer le text du record de points
         self.font = pygame.font.Font("assets/fonts/8-bit-pusab.ttf", 20)
