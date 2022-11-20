@@ -28,9 +28,10 @@ class Game:
         self.right_border = pygame.Rect(self.game_limit[0]+self.game_limit[2]-10, self.game_limit[1], 10, self.game_limit[3])
 
         #séparer la zone de jeux en tuiles, chaques tuiles représentent un bloc, la zone de jeu fait 10
-        self.game_tiles = 10
-        self.game_tile_x = self.game_limit[2]//self.game_tiles
-        self.game_tile_y = self.game_limit[3]//self.game_tiles
+        self.game_tiles_x = 10
+        self.game_tiles_y = 25
+        self.game_tile_x = self.game_limit[2]//self.game_tiles_x
+        self.game_tile_y = self.game_limit[3]//self.game_tiles_y
 
         self.block = Block()
 
@@ -51,7 +52,6 @@ class Game:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.running = False
-
 
 
         if self.menu.run:
