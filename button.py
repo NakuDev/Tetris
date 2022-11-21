@@ -18,4 +18,4 @@ class Button:
 
     #Dessiner le bouton
     def draw(self):
-        self.screen.blit(self.image, (self.rect.x, self.rect.y))
+        self.screen.blit(self.image, self.rect)

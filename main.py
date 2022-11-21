@@ -2,9 +2,10 @@ import pygame
 from button import Button
 from menu import Menu
 from block import Block
+from inGame import inGame
 
-WHITE = (255,255,255)
-BLACK = (0,0,0)
+WHITE = (255, 255, 255)
+BLACK = (0, 0, 0)
 
 class Game:
     #Charger la classe (definir les variables, les arguments)
@@ -18,22 +19,11 @@ class Game:
         self.menu = Menu()
         self.menu.music_name = "Classic Tetris Music"
 
-        #créer le text du record de points
-        self.font = pygame.font.Font("assets/fonts/8-bit-pusab.ttf", 20)
-        self.record_text = self.font.render("Best:", False, WHITE)
+        self.gamelaunched = False
 
-        #self.game_limit = [x, y, width, height]
-        self.game_limit = [self.screen_width//6, 0, (self.screen_width//6)*3, self.screen_height]
-        self.left_border = pygame.Rect(self.game_limit[0]-10, self.game_limit[1], 10, self.game_limit[3])
-        self.right_border = pygame.Rect(self.game_limit[0]+self.game_limit[2]-10, self.game_limit[1], 10, self.game_limit[3])
-
-        #séparer la zone de jeux en tuiles, chaques tuiles représentent un bloc, la zone de jeu fait 10
-        self.game_tiles_x = 10
-        self.game_tiles_y = 25
-        self.game_tile_x = self.game_limit[2]//self.game_tiles_x
-        self.game_tile_y = self.game_limit[3]//self.game_tiles_y
-
-        self.block = Block()
+        self.left_tick = 0
+        self.right_tick = 0
+        self.up_tick = 0
 
     #Gérer les évenement (input)
     def Handling_events(self):
@@ -44,15 +34,51 @@ class Game:
                 self.menu.music_name = "Classic Tetris Music"
                 pygame.mixer.music.load("assets/musics/tetris_music.mp3")
                 pygame.mixer.music.play(-1)
-            elif keys[pygame.K_2]:
+            if keys[pygame.K_2]:
                 self.menu.music_name = "Tetris Ragtime Piano"
                 pygame.mixer.music.load("assets/musics/Tetris RagTime.mp3")
                 pygame.mixer.music.play(-1)
 
+        if keys[pygame.K_LEFT]:
+            if self.left_tick == 0:
+                self.ingame.currentblock.rect.x -= self.ingame.game_tile_x
+                if pygame.sprite.spritecollide(self.ingame.currentblock, self.ingame.field.cube_group, False):
+                    self.ingame.currentblock.rect.x += self.ingame.game_tile_x
+            if self.left_tick > 6:
+                self.left_tick = 0
+            else:
+                self.left_tick += 1
+        else:
+            self.left_tick = 0
+        if keys[pygame.K_RIGHT]:
+            if self.right_tick == 0:
+                self.ingame.currentblock.rect.x += self.ingame.game_tile_x
+                if pygame.sprite.spritecollide(self.ingame.currentblock, self.ingame.field.cube_group, False):
+                    self.ingame.currentblock.rect.x -= self.ingame.game_tile_x
+            if self.right_tick > 6:
+                self.right_tick = 0
+            else:
+                self.right_tick += 1
+        else:
+            self.right_tick = 0
+        if not self.menu.run:
+            if keys[pygame.K_DOWN]:
+                self.ingame.currentblock.speed = 10
+            else:
+                self.ingame.currentblock.speed = 2
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.running = False
-
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_UP:
+                    self.ingame.currentblock.rotate()
+                    if pygame.sprite.spritecollide(self.ingame.currentblock, self.ingame.field.cube_group, False):
+                        self.ingame.currentblock.rect.x -= self.ingame.game_tile_x
+                '''if event.key == pygame.K_LEFT:
+                    self.ingame.currentblock.rect.x -= self.ingame.game_tile_x
+                if event.key == pygame.K_RIGHT:
+                    self.ingame.currentblock.rect.x += self.ingame.game_tile_x'''
 
         if self.menu.run:
             if self.menu.exit_button.isPressed():
@@ -60,12 +86,18 @@ class Game:
             if self.menu.start_button.isPressed():
                 self.menu.run = False
 
-
-
     def Update(self):
 
         if not self.menu.run:
-            self.block.Update()
+            if not self.gamelaunched:
+                self.ingame = inGame()
+                self.gamelaunched = True
+
+            if self.ingame.update():
+                self.gamelaunched = False
+                self.menu.start_button.isHere = True
+                self.menu.exit_button.isHere = True
+                self.menu.run = True
 
     #Afficher/dessiner le jeu
     def Display(self):
@@ -77,13 +109,7 @@ class Game:
         if self.menu.run:
             self.menu.Display()
         else:
-
-            #Afficher le text du record de point
-            self.screen.blit(self.record_text, (self.screen_width//10*7, self.screen_height//40))
-
-            #Afficher les limites de jeu
-            pygame.draw.rect(self.screen, WHITE, self.left_border)
-            pygame.draw.rect(self.screen, WHITE, self.right_border)
+           self.ingame.draw()
 
         pygame.display.flip()
 
@@ -93,16 +119,17 @@ class Game:
             self.Handling_events()
             self.Update()
             self.Display()
+            self.clock.tick(60)
 
 pygame.init()
 
-volume = 0.1
+volume = 0
 
 pygame.mixer.music.load("assets/musics/tetris_music.mp3")
 pygame.mixer.music.set_volume(volume)
 pygame.mixer.music.play(-1)
 
-screen = pygame.display.set_mode((800, 800))
+screen = pygame.display.set_mode((600, 700))
 
 game = Game(screen)
 game.Run()
