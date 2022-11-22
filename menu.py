@@ -39,4 +39,4 @@ class Menu:
 
         #Ecrire le nom de la musique en bas à droite
         self.music_name_rended = self.font.render(self.music_name, False, (255, 255, 255))
-        self.screen.blit(self.music_name_rended, (self.screen_width-self.music_name_rended.get_width()-10, self.screen_width-self.music_name_rended.get_height()-10))
+        self.screen.blit(self.music_name_rended, (self.screen_width-self.music_name_rended.get_width()-10, self.screen_height-self.music_name_rended.get_height()-10))
