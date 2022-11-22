@@ -25,6 +25,8 @@ class Game:
         self.right_tick = 0
         self.up_tick = 0
 
+        self.last_score = 0
+
     #Gérer les évenement (input)
     def Handling_events(self):
 
@@ -39,46 +41,51 @@ class Game:
                 pygame.mixer.music.load("assets/musics/Tetris RagTime.mp3")
                 pygame.mixer.music.play(-1)
 
-        if keys[pygame.K_LEFT]:
-            if self.left_tick == 0:
-                self.ingame.currentblock.rect.x -= self.ingame.game_tile_x
-                if pygame.sprite.spritecollide(self.ingame.currentblock, self.ingame.field.cube_group, False):
-                    self.ingame.currentblock.rect.x += self.ingame.game_tile_x
-            if self.left_tick > 6:
-                self.left_tick = 0
-            else:
-                self.left_tick += 1
-        else:
-            self.left_tick = 0
-        if keys[pygame.K_RIGHT]:
-            if self.right_tick == 0:
-                self.ingame.currentblock.rect.x += self.ingame.game_tile_x
-                if pygame.sprite.spritecollide(self.ingame.currentblock, self.ingame.field.cube_group, False):
-                    self.ingame.currentblock.rect.x -= self.ingame.game_tile_x
-            if self.right_tick > 6:
-                self.right_tick = 0
-            else:
-                self.right_tick += 1
-        else:
-            self.right_tick = 0
         if not self.menu.run:
-            if keys[pygame.K_DOWN]:
-                self.ingame.currentblock.speed = 10
+
+            if keys[pygame.K_LEFT] or keys[pygame.K_q]:
+                if self.left_tick == 0:
+                    self.ingame.currentblock.rect.x -= self.ingame.game_tile_x
+                    if pygame.sprite.spritecollide(self.ingame.currentblock, self.ingame.field.cube_group, False):
+                        self.ingame.currentblock.rect.x += self.ingame.game_tile_x
+                if self.left_tick > 6:
+                    self.left_tick = 0
+                else:
+                    self.left_tick += 1
             else:
-                self.ingame.currentblock.speed = 2
+                self.left_tick = 0
+            if keys[pygame.K_RIGHT] or keys[pygame.K_d]:
+                if self.right_tick == 0:
+                    self.ingame.currentblock.rect.x += self.ingame.game_tile_x
+                    if pygame.sprite.spritecollide(self.ingame.currentblock, self.ingame.field.cube_group, False):
+                        self.ingame.currentblock.rect.x -= self.ingame.game_tile_x
+                if self.right_tick > 6:
+                    self.right_tick = 0
+                else:
+                    self.right_tick += 1
+            else:
+                self.right_tick = 0
+            if not self.menu.run:
+                if keys[pygame.K_DOWN] or keys[pygame.K_s]:
+                    self.ingame.currentblock.speed = 10
+                else:
+                    self.ingame.currentblock.speed = 2
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.running = False
-            elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_UP:
-                    self.ingame.currentblock.rotate()
-                    if pygame.sprite.spritecollide(self.ingame.currentblock, self.ingame.field.cube_group, False):
+            elif not self.menu.run:
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_UP or event.key == pygame.K_z:
+                        self.ingame.currentblock.rotate()
+                        if pygame.sprite.spritecollide(self.ingame.currentblock, self.ingame.field.cube_group, False):
+                            self.ingame.currentblock.rect.x -= self.ingame.game_tile_x
+                    if event.key == pygame.K_SPACE:
+                        self.ingame.keep_bloc()
+                    '''if event.key == pygame.K_LEFT:
                         self.ingame.currentblock.rect.x -= self.ingame.game_tile_x
-                '''if event.key == pygame.K_LEFT:
-                    self.ingame.currentblock.rect.x -= self.ingame.game_tile_x
-                if event.key == pygame.K_RIGHT:
-                    self.ingame.currentblock.rect.x += self.ingame.game_tile_x'''
+                    if event.key == pygame.K_RIGHT:
+                        self.ingame.currentblock.rect.x += self.ingame.game_tile_x'''
 
         if self.menu.run:
             if self.menu.exit_button.isPressed():
@@ -98,6 +105,9 @@ class Game:
                 self.menu.start_button.isHere = True
                 self.menu.exit_button.isHere = True
                 self.menu.run = True
+                self.last_score = self.ingame.score
+        else:
+            self.menu.update(self.last_score)
 
     #Afficher/dessiner le jeu
     def Display(self):
@@ -123,7 +133,7 @@ class Game:
 
 pygame.init()
 
-volume = 0
+volume = 0.1
 
 pygame.mixer.music.load("assets/musics/tetris_music.mp3")
 pygame.mixer.music.set_volume(volume)

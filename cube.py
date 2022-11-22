@@ -22,6 +22,12 @@ class Cube(pygame.sprite.Sprite):
         elif type == 4:
             self.image = pygame.image.load("assets/textures/blue_cube.png")
             self.image = pygame.transform.scale(self.image, (tile_x, tile_y))
+        elif type == 5:
+            self.image = pygame.image.load("assets/textures/orange_cube.png")
+            self.image = pygame.transform.scale(self.image, (tile_x, tile_y))
+        elif type == 6:
+            self.image = pygame.image.load("assets/textures/darkblue_cube.png")
+            self.image = pygame.transform.scale(self.image, (tile_x, tile_y))
 
         self.rect = self.image.get_rect(topleft=(pos))
         self.mask = pygame.mask.from_surface(self.image)
