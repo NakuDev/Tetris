@@ -1,17 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="28ad5030-7fe6-49b1-ba68-a6fd09cca225" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/assets/sound_effects/drop.mp3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/Tetris.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Tetris.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/block.py" beforeDir="false" afterPath="$PROJECT_DIR$/block.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cube.py" beforeDir="false" afterPath="$PROJECT_DIR$/cube.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/field.py" beforeDir="false" afterPath="$PROJECT_DIR$/field.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/inGame.py" beforeDir="false" afterPath="$PROJECT_DIR$/inGame.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/menu.py" beforeDir="false" afterPath="$PROJECT_DIR$/menu.py" afterDir="false" />
-    </list>
+    <list default="true" id="28ad5030-7fe6-49b1-ba68-a6fd09cca225" name="Changes" comment="Adding the sounds-effects, score calculation, holded piece function, set a percentage of spawn for each block" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -29,14 +19,14 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "last_opened_file_path": "C:/Users/Victor/PycharmProjects/Tetris/assets/sound_effects",
-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Victor/Downloads/Tetris-main&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Victor\PycharmProjects\Tetris\assets\sound_effects" />
@@ -79,6 +69,14 @@
       <option name="presentableId" value="Default" />
       <updated>1666553152671</updated>
     </task>
+    <task id="LOCAL-00001" summary="Adding the sounds-effects, score calculation, holded piece function, set a percentage of spawn for each block">
+      <created>1669075628439</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1669075628439</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -91,5 +89,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Adding the sounds-effects, score calculation, holded piece function, set a percentage of spawn for each block" />
+    <option name="LAST_COMMIT_MESSAGE" value="Adding the sounds-effects, score calculation, holded piece function, set a percentage of spawn for each block" />
   </component>
 </project>
