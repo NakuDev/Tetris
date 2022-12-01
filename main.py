@@ -1,7 +1,5 @@
 import pygame
-from button import Button
 from menu import Menu
-from block import Block
 from inGame import inGame
 
 WHITE = (255, 255, 255)
